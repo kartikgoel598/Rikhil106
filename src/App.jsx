@@ -10,6 +10,7 @@ import Subscribe from "./components/Subscribe/Subscribe";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import Popup from "./components/Popup/Popup";
+import TestSupabase from "./components/TestSupabase";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -38,6 +39,8 @@ const App = () => {
       <Testimonials />
       <Footer />
       <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
+      <TestSupabase />
+      
     </div>
   );
 };
