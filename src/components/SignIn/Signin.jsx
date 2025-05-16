@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabaseClient } from '../../config/supabaseClient'
+import { useNavigate } from 'react-router-dom'
+import { FaUserCircle } from 'react-icons/fa'
 
 function SignIn() {
   const [email, setEmail] = useState('')
@@ -7,17 +9,34 @@ function SignIn() {
   const [loading, setLoading] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [name, setName] = useState('')
+  const [user, setUser] = useState(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const session = supabaseClient.auth.getSession()
+    setUser(session?.user ?? null)
+
+    const { data: subscription } = supabaseClient.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => {
+      if (subscription && typeof subscription.unsubscribe === 'function') {
+        subscription.unsubscribe()
+      }
+    }
+  }, [])
 
   const handleSignIn = async (e) => {
     e.preventDefault()
     setLoading(true)
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
         password,
       })
       if (error) throw error
-      // Handle successful sign in - you can redirect or update UI
+      navigate('/')
     } catch (error) {
       alert(error.message)
     } finally {
@@ -29,7 +48,7 @@ function SignIn() {
     e.preventDefault()
     setLoading(true)
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
         options: {
