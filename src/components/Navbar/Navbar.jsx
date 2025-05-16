@@ -5,6 +5,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa";
 import DarkMode from "./DarkMode";
 import { FiShoppingBag } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Menu = [
   {
@@ -53,6 +54,7 @@ const DropdownLinks = [
 ];
 
 const Navbar = ({ handleOrderPopup }) => {
+  const navigate = useNavigate();
   return (
     <div className="shadow-md bg-white dark:bg-slate-800 dark:text-white duration-200 relative z-40">
       {/* upper Navbar */}
@@ -87,6 +89,13 @@ const Navbar = ({ handleOrderPopup }) => {
               </span>
               <FaCartShopping className="text-xl text-white drop-shadow-sm cursor-pointer" />
             </button>
+            {/* After the cart button and before dark mode */}
+<button
+  onClick={() => navigate("/signin")}
+  className="bg-gradient-to-r from-primary to-secondary transition-all duration-200 text-white py-1 px-4 rounded-full flex items-center gap-3 group"
+>
+  Sign In
+</button>
 
             {/* Darkmode Switch */}
             <div>

@@ -11,6 +11,8 @@ import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import Popup from "./components/Popup/Popup";
 import TestSupabase from "./components/TestSupabase";
+import SignIn from "./components/signIn/SignIn";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -31,16 +33,21 @@ const App = () => {
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200">
       <Navbar handleOrderPopup={handleOrderPopup} />
-      <Hero handleOrderPopup={handleOrderPopup} />
-      <Products />
-      <TopProducts handleOrderPopup={handleOrderPopup} />
-      <Banner />
-      <Subscribe />
-      <Testimonials />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Hero handleOrderPopup={handleOrderPopup} />
+            <Products />
+            <TopProducts handleOrderPopup={handleOrderPopup} />
+            <Banner />
+            <Subscribe />
+            <Testimonials />
+          </>
+        } />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
       <Footer />
       <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
-      <TestSupabase />
-      
     </div>
   );
 };
